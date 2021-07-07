@@ -29,8 +29,9 @@ class App < Roda
   Dir['./routes/*.rb'].each{|f| require f}
 
   route do |r|
-    @data = data = JSON.parse(request.body.read) rescue {}
+    data = JSON.parse(request.body.read) rescue {}
 	  request.body.rewind
+    @data = data = Utils.indifferent_data(data)
 
     if ENV['RACK_ENV'] == 'development'
   	  puts "\n#{Time.now}\n#{request.request_method} #{request.path}\nxhr #{request.xhr?}"

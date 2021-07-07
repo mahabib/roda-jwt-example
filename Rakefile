@@ -1,3 +1,5 @@
+ENV['RACK_ENV'] = 'test'
+
 begin
   require_relative '.env'
 rescue LoadError
@@ -66,6 +68,86 @@ end
 desc "Seed development database"
 task :dev_seed do
   system 'ruby seed/user.rb'
+end
+
+namespace :app do
+	desc "test by test name: rake app:t test_invalid_general_login"
+	task :t do |t, args|
+		ENV['RACK_ENV'] = 'test'
+    Rake::Task['test_bounce'].invoke
+
+		ARGV.each { |a| task a.to_sym do ; end }
+
+		testname = ARGV[1]
+
+		dirs = File.join('tests', 'ts_*.rb')
+		test_files = Dir.glob(dirs)
+
+		matches = test_files.collect do |filename|
+			filename if !File.open(filename).grep(/#{testname}/).empty?
+		end.compact
+
+		if matches.count > 1
+			puts
+			matches.each { |f| puts f }
+			puts
+			abort "'#{testname}' exists in multiple test files"
+		end
+
+		filename = matches.first
+		command = "bundle exec 'ruby #{filename} -n #{testname}'"
+
+		puts exec command
+	end
+
+	desc "test by number & name: rake app:tt 21 test_invalid_general_login"
+	task :tt do |t, args|
+		ENV['RACK_ENV'] = 'test'
+    Rake::Task['test_bounce'].invoke
+
+		tests_dir = File.expand_path(File.join(__dir__, 'tests'))
+
+		ARGV.each { |a| task a.to_sym do ; end }
+
+		test_file_number = ARGV[1]
+
+		files = File.join('tests', "ts_#{test_file_number}*.rb")
+		test_files = Dir.glob(files)
+
+		if test_files.empty?
+			abort "Error - Invalid file number"
+			abort
+		end
+
+		test_file = test_files.first
+		testname = ARGV[2]
+		if testname.nil?
+			command = "bundle exec 'ruby #{test_file}'"
+		else
+			command = "bundle exec 'ruby #{test_file} -n #{testname}'"
+		end
+
+		puts exec command
+	end
+
+	desc "to test all apis"
+	task :test do
+		require 'rake/testtask'
+
+		ENV['RACK_ENV'] = 'test'
+    Rake::Task['test_bounce'].invoke
+
+		tests_files_path = File.expand_path(File.join(File.dirname(__FILE__), 'tests/**/ts_*.rb'))
+
+		Rake::TestTask.new(:alltest) do |t|
+			t.test_files = FileList[tests_files_path]
+			# t.verbose = true
+			t.verbose = false
+			t.warning = false
+		end
+
+		Rake::Task['alltest'].invoke
+	end
 end
 
 

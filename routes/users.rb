@@ -1,8 +1,11 @@
 App.route("users") do |r|
+  data = @data
+
   r.on String do |user_id|
+    user = User[user_id]
+    raise "Invalid User!" if !user
+
     r.get do
-      user = User[user_id]
-      raise "Invalid User!" if !user
       {
         success: true,
         values: user.values
@@ -10,7 +13,8 @@ App.route("users") do |r|
     end
 
     r.put do
-      @current_user = JsonWebToken.authorize_request(r.headers['Authorization'])
+      token = r.headers['Authorization'] ||  params[:token] || data[:token] || nil
+      @current_user = JsonWebToken.authorize_request(token)
       user.update_user(params)
       {
         success: true
@@ -18,7 +22,8 @@ App.route("users") do |r|
     end
 
     r.delete do
-      @current_user = JsonWebToken.authorize_request(r.headers['Authorization'])
+      token = r.headers['Authorization'] ||  params[:token] || data[:token] || nil
+      @current_user = JsonWebToken.authorize_request(token)
       user.destroy
       {
         success: true
@@ -26,7 +31,7 @@ App.route("users") do |r|
     end
   end # /users/:id
   r.post do
-    User.create_user(params)
+    User.create_user(data)
     {
       success: true
     }

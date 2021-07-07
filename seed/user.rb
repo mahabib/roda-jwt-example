@@ -6,50 +6,50 @@ require_relative '../models'
 
 recs = [{
   :name=>'Habib',
-  :email=>'habib@idefi.in',
-  :password=>'habib@idefi.in',
+  :email=>'habib@mail.com',
+  :password=>'habib@mail.com',
   :gender=>'Male',
   :contact_no=>'9987654321',
   :address=>'Whitefield, Bangalore, India'
 }, {
   :name=>'Ahsan',
-  :email=>'ahsan@idefi.in',
-  :password=>'ahsan@idefi.in',
+  :email=>'ahsan@mail.com',
+  :password=>'ahsan@mail.com',
   :gender=>'Male',
   :contact_no=>'9987654321',
   :address=>'Whitefield, Bangalore, India'
 }, {
   :name=>'Gaurav',
-  :email=>'gaurav@idefi.in',
-  :password=>'gaurav@idefi.in',
+  :email=>'gaurav@mail.com',
+  :password=>'gaurav@mail.com',
   :gender=>'Male',
   :contact_no=>'9987654321',
   :address=>'Murgeshpalya, Bangalore, India'
 }, {
   :name=>'Mohan',
-  :email=>'mohan@idefi.in',
-  :password=>'mohan@idefi.in',
+  :email=>'mohan@mail.com',
+  :password=>'mohan@mail.com',
   :gender=>'Male',
   :contact_no=>'9987654321',
   :address=>'Domlur, Bangalore, India'
 }, {
   :name=>'Parneta',
-  :email=>'parneta@idefi.in',
-  :password=>'parneta@idefi.in',
+  :email=>'parneta@mail.com',
+  :password=>'parneta@mail.com',
   :gender=>'Female',
   :contact_no=>'9987654321',
   :address=>'Koramongala, Bangalore, India'
 }, {
   :name=>'Sagar',
-  :email=>'sagar@idefi.in',
-  :password=>'sagar@idefi.in',
+  :email=>'sagar@mail.com',
+  :password=>'sagar@mail.com',
   :gender=>'Male',
   :contact_no=>'9987654321',
   :address=>'Koramongala, Bangalore, India'
 }, {
   :name=>'Kanchan',
-  :email=>'kanchan@idefi.in',
-  :password=>'kanchan@idefi.in',
+  :email=>'kanchan@mail.com',
+  :password=>'kanchan@mail.com',
   :gender=>'Female',
   :contact_no=>'9987654321',
   :address=>'Kundalahalli, Bangalore, India'
